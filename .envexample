@@ -1,7 +1,7 @@
-#SIRVE PARA CONFIGURAR LA BASE DE DATOS Y SI SE MIGRA A OTRA, SOLO SE CAMBIA AQUI SIN MODIFICAR EL CODIGO
-
-#URL de conexion a la base de datos
+# 🌐 URL DE CONEXIÓN A BASE DE DATOS
+# sqlite:/// para SQLite (desarrollo)
+# postgresql:// para PostgreSQL (producción)
 DATABASE_URL=sqlite:///universidad.db
 
-#Modo desarrollo (True/False)
+# 🛠️ MODO DESARROLLO: True para desarrollo, False para producción
 DEBUG=True

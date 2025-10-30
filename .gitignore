@@ -1,31 +1,33 @@
-# Entornos virtuales de Python (no subir)
+#  ENTORNOS VIRTUALES: son específicos de cada máquina
 .venv/
 venv/
 env/
 
-# Archivos cache de Python (se regeneran automáticamente)
+# CACHE PYTHON: Se regeneran automáticamente
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 
-# Base de datos SQLite (contiene datos sensibles)
+# BASE DE DATOS: Contiene datos sensibles
 *.db
 *.sqlite3
 *.sqlite
 
-# Variables de entorno (contienen contraseñas)
+# VARIABLES ENTORNO: Contienen contraseñas y configs sensibles
 .env
 .env.local
 
-# Archivos del sistema operativo
+
+# ARCHIVOS SISTEMA: Específicos del sistema operativo
 .DS_Store
 Thumbs.db
 
-# IDEs (configuración local)
+
+# DEs: Configuración local de editores
 .idea/
 .vscode/
 
-# Logs de la aplicación
+# LOGS: Archivos de registro de la aplicación
 *.log
 logs/
