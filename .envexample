@@ -1,7 +1,7 @@
-# 🌐 URL DE CONEXIÓN A BASE DE DATOS
+# URL DE CONEXIÓN A BASE DE DATOS
 # sqlite:/// para SQLite (desarrollo)
 # postgresql:// para PostgreSQL (producción)
 DATABASE_URL=sqlite:///universidad.db
 
-# 🛠️ MODO DESARROLLO: True para desarrollo, False para producción
+# MODO DESARROLLO: True para desarrollo, False para producción
 DEBUG=True
