@@ -21,7 +21,7 @@ from pydantic import validator
 # validator: Decorador para crear validaciones personalizadas
 
 import re
-# 🔍 re: Para expresiones regulares en validaciones
+# re: Para expresiones regulares en validaciones
 
 class Matricula(SQLModel, table=True):
     """
@@ -226,7 +226,7 @@ class Curso(SQLModel, table=True):
 
         # EXPRESIÓN REGULAR: 3 letras mayúsculas + 3 números
         if not re.match(r'^[A-Z]{3}\d{3}$', valor):
-            raise ValueError('❌ El código debe tener formato AAA111 (3 letras mayúsculas + 3 números)')
+            raise ValueError(' El código debe tener formato AAA111 (3 letras mayúsculas + 3 números)')
         return valor
 
     @validator('horario')
@@ -239,7 +239,7 @@ class Curso(SQLModel, table=True):
         • No puede estar vacío o solo espacios
         • Se eliminan espacios en blanco al inicio/final
 
-        🎯 EJEMPLOS VÁLIDOS:
+        EJEMPLOS VÁLIDOS:
         • 'Lunes 8:00-10:00'
         • 'Martes y Jueves 14:00-16:00'
         • 'Miércoles 18:00-20:00'

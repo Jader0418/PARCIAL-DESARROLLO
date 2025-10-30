@@ -6,18 +6,14 @@ Todas las operaciones de base de datos
 from sqlmodel import Session, select, and_
 # Importar tipos para tipado
 from typing import List, Optional
-
-# 📦 IMPORTAR modelos desde el paquete
 from models import Estudiante, Curso, Matricula
 
-
-# ==================== 📚 OPERACIONES PARA ESTUDIANTES ====================
 
 def crear_estudiante(session: Session, estudiante: Estudiante) -> Estudiante:
     """
     CREAR nuevo estudiante con validación de cédula única
     """
-    # 🔍 VERIFICAR que no exista estudiante con misma cédula
+    # VERIFICAR que no exista estudiante con misma cédula
     existing = session.exec(
         select(Estudiante).where(Estudiante.cedula == estudiante.cedula)
     ).first()
@@ -26,11 +22,11 @@ def crear_estudiante(session: Session, estudiante: Estudiante) -> Estudiante:
     if existing:
         raise ValueError("Ya existe un estudiante con esta cédula")
 
-    # ➕ AÑADIR estudiante a la sesión
+    # AÑADIR estudiante a la sesión
     session.add(estudiante)
-    # 💾 GUARDAR cambios en la base de datos
+    # GUARDAR cambios en la base de datos
     session.commit()
-    # 🔄 ACTUALIZAR objeto con datos de BD (ID automático, etc.)
+    # ACTUALIZAR objeto con datos de BD (ID automático, etc.)
     session.refresh(estudiante)
     return estudiante
 
@@ -39,14 +35,14 @@ def listar_estudiantes(session: Session, semestre: Optional[int] = None) -> List
     """
     LISTAR estudiantes con filtro opcional por semestre
     """
-    # 📝 CREAR consulta base
+    # CREAR consulta base
     query = select(Estudiante)
 
-    # 🔍 SI se proporciona semestre, añadir filtro
+    # SI se proporciona semestre, añadir filtro
     if semestre:
         query = query.where(Estudiante.semestre == semestre)
 
-    # 🚀 EJECUTAR consulta y devolver todos los resultados
+    # EJECUTAR consulta y devolver todos los resultados
     return session.exec(query).all()
 
 
@@ -54,7 +50,7 @@ def obtener_estudiante(session: Session, estudiante_id: int) -> Optional[Estudia
     """
     OBTENER un estudiante por su ID
     """
-    # 🔍 BUSCAR estudiante por ID primario
+    # BUSCAR estudiante por ID primario
     return session.get(Estudiante, estudiante_id)
 
 
@@ -62,10 +58,10 @@ def obtener_estudiante_con_cursos(session: Session, estudiante_id: int) -> Optio
     """
     OBTENER estudiante con sus cursos matriculados (CONSULTA RELACIONAL)
     """
-    # 🔍 BUSCAR estudiante por ID
+    # BUSCAR estudiante por ID
     estudiante = session.get(Estudiante, estudiante_id)
 
-    # 🔄 SI existe, cargar relación de cursos
+    # SI existe, cargar relación de cursos
     if estudiante:
         session.refresh(estudiante, attribute_names=["cursos"])
 
@@ -81,7 +77,7 @@ def actualizar_estudiante(session: Session, estudiante_id: int, estudiante_data:
     if not estudiante:
         return None
 
-    # 🔄 SI se actualiza cédula, verificar que sea única
+    #  SI se actualiza cédula, verificar que sea única
     if 'cedula' in estudiante_data:
         existing = session.exec(
             select(Estudiante).where(
@@ -94,7 +90,7 @@ def actualizar_estudiante(session: Session, estudiante_id: int, estudiante_data:
         if existing:
             raise ValueError("Ya existe un estudiante con esta cédula")
 
-    # ✏️ ACTUALIZAR campos del estudiante
+    #  ACTUALIZAR campos del estudiante
     for key, value in estudiante_data.items():
         setattr(estudiante, key, value)
 
@@ -108,31 +104,29 @@ def eliminar_estudiante(session: Session, estudiante_id: int) -> bool:
     """
     ELIMINAR estudiante (eliminación en cascada de matrículas)
     """
-    # 🔍 BUSCAR estudiante
+    # BUSCAR estudiante
     estudiante = session.get(Estudiante, estudiante_id)
     if not estudiante:
         return False
 
-    # 🗑️ ELIMINAR estudiante (las matrículas se eliminan en cascada)
+    # ELIMINAR estudiante (las matrículas se eliminan en cascada)
     session.delete(estudiante)
     session.commit()
     return True
 
 
-# ==================== 📖 OPERACIONES PARA CURSOS ====================
-
 def crear_curso(session: Session, curso: Curso) -> Curso:
     """
     CREAR nuevo curso con validación de código único
     """
-    # 🔍 VERIFICAR código único
+    # VERIFICAR código único
     existing = session.exec(
         select(Curso).where(Curso.codigo == curso.codigo)
     ).first()
     if existing:
         raise ValueError("Ya existe un curso con este código")
 
-    # ➕ AÑADIR curso
+    # AÑADIR curso
     session.add(curso)
     session.commit()
     session.refresh(curso)
@@ -145,11 +139,11 @@ def listar_cursos(session: Session, creditos: Optional[int] = None, codigo: Opti
     """
     query = select(Curso)
 
-    # 🔍 FILTRO por créditos
+    # FILTRO por créditos
     if creditos:
         query = query.where(Curso.creditos == creditos)
 
-    # 🔍 FILTRO por código (búsqueda parcial)
+    # FILTRO por código (búsqueda parcial)
     if codigo:
         query = query.where(Curso.codigo.contains(codigo))
 
@@ -179,7 +173,7 @@ def actualizar_curso(session: Session, curso_id: int, curso_data: dict) -> Optio
     if not curso:
         return None
 
-    # 🔄 VALIDAR código único si se actualiza
+    # VALIDAR código único si se actualiza
     if 'codigo' in curso_data:
         existing = session.exec(
             select(Curso).where(
@@ -192,7 +186,7 @@ def actualizar_curso(session: Session, curso_id: int, curso_data: dict) -> Optio
         if existing:
             raise ValueError("Ya existe un curso con este código")
 
-    # ✏️ ACTUALIZAR campos
+    # ACTUALIZAR campos
     for key, value in curso_data.items():
         setattr(curso, key, value)
 
@@ -212,19 +206,17 @@ def eliminar_curso(session: Session, curso_id: int) -> bool:
     return True
 
 
-# ==================== 🎫 OPERACIONES DE MATRÍCULA ====================
-
 def matricular_estudiante(session: Session, estudiante_id: int, curso_id: int) -> bool:
     """
     MATRICULAR estudiante en curso con validaciones de negocio
     """
-    # 🔍 VERIFICAR que existan estudiante y curso
+    # VERIFICAR que existan estudiante y curso
     estudiante = session.get(Estudiante, estudiante_id)
     curso = session.get(Curso, curso_id)
     if not estudiante or not curso:
         return False
 
-    # ❌ VALIDAR que no esté ya matriculado
+    # VALIDAR que no esté ya matriculado
     existing = session.exec(
         select(Matricula).where(
             and_(
@@ -236,7 +228,7 @@ def matricular_estudiante(session: Session, estudiante_id: int, curso_id: int) -
     if existing:
         raise ValueError("El estudiante ya está matriculado en este curso")
 
-    # ⏰ VALIDAR conflictos de horario
+    # VALIDAR conflictos de horario
     cursos_matriculados = session.exec(
         select(Curso).join(Matricula).where(Matricula.estudiante_id == estudiante_id)
     ).all()
@@ -247,7 +239,7 @@ def matricular_estudiante(session: Session, estudiante_id: int, curso_id: int) -
         if curso_mat.horario == nuevo_curso.horario:
             raise ValueError("El estudiante ya tiene un curso en este horario")
 
-    # ➕ CREAR matrícula
+    # CREAR matrícula
     matricula = Matricula(estudiante_id=estudiante_id, curso_id=curso_id)
     session.add(matricula)
     session.commit()
@@ -271,7 +263,7 @@ def desmatricular_estudiante(session: Session, estudiante_id: int, curso_id: int
     if not matricula:
         return False
 
-    # 🗑️ ELIMINAR matrícula
+    # ELIMINAR matrícula
     session.delete(matricula)
     session.commit()
     return True
