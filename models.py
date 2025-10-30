@@ -1,17 +1,17 @@
 from sqlmodel import SQLModel, Field, Relationship
 from typing import List, Optional
-from datetime import time
-from pydantic import validator, EmailStr
+from pydantic import validator
 import re
 
 
-# Tabla intermedia para la relación N:M
+# 📝 TABLA INTERMEDIA - debe definirse PRIMERO
 class Matricula(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     estudiante_id: int = Field(foreign_key="estudiante.id")
     curso_id: int = Field(foreign_key="curso.id")
 
 
+# 🎓 MODELO ESTUDIANTE
 class Estudiante(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     cedula: str = Field(index=True, unique=True)
@@ -19,7 +19,7 @@ class Estudiante(SQLModel, table=True):
     email: str
     semestre: int = Field(ge=1, le=12)
 
-    # Relación con cursos a través de Matricula
+    # 🔗 RELACIÓN - usar la CLASE directamente, no string
     cursos: List["Curso"] = Relationship(back_populates="estudiantes", link_model=Matricula)
 
     @validator('cedula')
@@ -35,14 +35,15 @@ class Estudiante(SQLModel, table=True):
         return v
 
 
+# 📚 MODELO CURSO
 class Curso(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     codigo: str = Field(index=True, unique=True)
     nombre: str
     creditos: int = Field(ge=1, le=6)
-    horario: str  # Formato: "Lunes 8:00-10:00"
+    horario: str
 
-    # Relación con estudiantes a través de Matricula
+    # 🔗 RELACIÓN - usar la CLASE directamente
     estudiantes: List[Estudiante] = Relationship(back_populates="cursos", link_model=Matricula)
 
     @validator('codigo')
@@ -53,7 +54,6 @@ class Curso(SQLModel, table=True):
 
     @validator('horario')
     def validar_horario(cls, v):
-        # Validación simple del formato del horario
         if len(v) < 5:
             raise ValueError('Formato de horario inválido')
         return v
