@@ -8,9 +8,7 @@ from sqlmodel import Session, select, and_
 from typing import List, Optional
 
 # 📦 IMPORTAR modelos desde el paquete
-from models.estudiante import Estudiante
-from models.curso import Curso
-from models.matricula import Matricula
+from models import Estudiante, Curso, Matricula
 
 
 # ==================== 📚 OPERACIONES PARA ESTUDIANTES ====================
@@ -24,7 +22,7 @@ def crear_estudiante(session: Session, estudiante: Estudiante) -> Estudiante:
         select(Estudiante).where(Estudiante.cedula == estudiante.cedula)
     ).first()
 
-    #  SI existe, lanzar error
+    #  Si existe, lanzar error
     if existing:
         raise ValueError("Ya existe un estudiante con esta cédula")
 
