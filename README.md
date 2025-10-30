@@ -10,14 +10,6 @@ Permite tener todo más organizado y automatizado, evitando procesos manuales y 
 4. [x] Contar con documentación automática gracias a Swagger.
 5. [x] Usar una base de datos SQLite lista para funcionar sin configuraciones complicadas.
 
-##  💡 Características
-
-- Gestión completa de estudiantes y cursos
-- Sistema de matrículas
-- Validaciones de negocio
-- Documentación automática con Swagger
-- Base de datos SQLite
-
 ## Requisitos
 
 - Python 3.8+
