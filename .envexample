@@ -1,3 +1,7 @@
 #SIRVE PARA CONFIGURAR LA BASE DE DATOS Y SI SE MIGRA A OTRA, SOLO SE CAMBIA AQUI SIN MODIFICAR EL CODIGO
+
+#URL de conexion a la base de datos
 DATABASE_URL=sqlite:///universidad.db
+
+#Modo desarrollo (True/False)
 DEBUG=True

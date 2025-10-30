@@ -1,32 +1,31 @@
-<<<<<<< HEAD
-# Tu .gitignore local
-__pycache__/
-*.pyc
-*.db
-*.sqlite3
-.env
+# Entornos virtuales de Python (no subir)
 .venv/
-=======
-# GitHub Python .gitignore
+venv/
+env/
+
+# Archivos cache de Python (se regeneran automáticamente)
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
->>>>>>> origin/main
+
+# Base de datos SQLite (contiene datos sensibles)
+*.db
+*.sqlite3
+*.sqlite
+
+# Variables de entorno (contienen contraseñas)
+.env
+.env.local
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# IDEs (configuración local)
+.idea/
+.vscode/
+
+# Logs de la aplicación
+*.log
+logs/
