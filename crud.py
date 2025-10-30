@@ -24,7 +24,7 @@ def crear_estudiante(session: Session, estudiante: Estudiante) -> Estudiante:
         select(Estudiante).where(Estudiante.cedula == estudiante.cedula)
     ).first()
 
-    # ❌ SI existe, lanzar error
+    #  SI existe, lanzar error
     if existing:
         raise ValueError("Ya existe un estudiante con esta cédula")
 
