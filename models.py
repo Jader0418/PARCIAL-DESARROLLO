@@ -239,7 +239,7 @@ class Curso(SQLModel, table=True):
         • No puede estar vacío o solo espacios
         • Se eliminan espacios en blanco al inicio/final
 
-        EJEMPLOS VÁLIDOS:
+        2e3d4frEJEMPLOS VÁLIDOS:
         • 'Lunes 8:00-10:00'
         • 'Martes y Jueves 14:00-16:00'
         • 'Miércoles 18:00-20:00'
