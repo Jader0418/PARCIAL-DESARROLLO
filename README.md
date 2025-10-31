@@ -1,24 +1,27 @@
-# 🎓Sistema de Gestión Universitaria
-Este proyecto es una aplicacion pensada para facilitar la gestion de estudiantes, cursos y matrículas dentro de una universidad.
-Permite tener todo más organizado y automatizado, evitando procesos manuales y repetitivos.
+# ~~~~~ Sistema de Gestión Universitaria - API ~~~~
 
-## ❓ ¿Qué puede hacer este sistema?
+## __ Descripción __
 
-1. [x] Registrar, editar y eliminar estudiantes y cursos.
-2. [x] Gestionar matrículas de forma sencilla.
-3. [x] Aplicar validaciones para asegurar que los datos sean correctos.
-4. [x] Contar con documentación automática gracias a Swagger.
-5. [x] Usar una base de datos SQLite lista para funcionar sin configuraciones complicadas.
+**Sistema de Gestión Universitaria** es una API REST moderna desarrollada con FastAPI y SQLModel para la administración académica de la Universidad Católica de Colombia. Permite gestionar estudiantes, cursos y matrículas con validaciones robustas y documentación automática.
 
-## Requisitos
+## Características Principales
 
-- Python 3.8+
-- Dependencias listadas en `requirements.txt`
+- **FastAPI** - Framework web de alto rendimiento
+- **SQLModel** - ORM con validaciones Pydantic integradas
+- **SQLite** - Base de datos para desarrollo
+- **Pydantic** - Validación de datos y serialización
 
-## 📥 Instalación
+### 📊 Modelos Implementados
+- ** Estudiante**: Gestión de información estudiantil
+- ** Curso**: Administración de oferta académica  
+- ** Matricula**: Sistema de relaciones N:M entre estudiantes y cursos
 
-1. Si deseas clonar el repositorio:
-```bash
-git clone https://github.com/Jader0418/PARCIAL-DESARROLLO.git
+### Validaciones de Negocio
+- ✅ Cédula única (8-10 dígitos)
+- ✅ Código de curso único (formato AAA111)
+- ✅ Control de conflictos de horario
+- ✅ Validación de formatos de email
+- ✅ Rangos académicos (semestre 1-12, créditos 1-6)
+
 
 
